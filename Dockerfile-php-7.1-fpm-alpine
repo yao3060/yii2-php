@@ -27,6 +27,11 @@ RUN apk add --no-cache libzip-dev \
     && docker-php-ext-install pdo pdo_mysql opcache zip bcmath redis sockets  \
     && rm -rf /var/cache/apk/* /tmp/* \
     && docker-php-source delete
+    
+## install mcrypt
+RUN apk add --no-cache  libmcrypt-dev libltdl \
+    && docker-php-ext-configure mcrypt \
+    && docker-php-ext-install mcrypt
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
