@@ -32,6 +32,11 @@ RUN apk add --no-cache libzip-dev \
 RUN apk add --no-cache  libmcrypt-dev libltdl \
     && docker-php-ext-configure mcrypt \
     && docker-php-ext-install mcrypt
+    
+## gd extension
+RUN apk add --no-cache libpng libpng-dev \
+        && docker-php-ext-install gd \
+        && apk del libpng-dev
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
