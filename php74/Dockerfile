@@ -1,4 +1,4 @@
-FROM php:8-fpm-alpine
+FROM php:7.4-fpm-alpine
 
 # add phpredis to php-available-exts (install in the next step)
 ENV PHPREDIS_VERSION 5.3.4
@@ -7,11 +7,25 @@ RUN mkdir -p /usr/src/php/ext/redis \
 	&& echo 'redis' >> /usr/src/php-available-ext
 
 # update mirror url base on location ( Global or CN )
-RUN sed -i "/dl-cdn.alpinelinux.org/s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g" /etc/apk/repositories && cat /etc/apk/repositories
+RUN sed -i "/dl-cdn.alpinelinux.org/s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g" /etc/apk/repositories \
+    && cat /etc/apk/repositories
+
+# Extensions
+RUN echo "Extensions install - start" \
+    # Sockets
+    && docker-php-ext-install sockets \
+    # Amqp
+    && apk add --no-cache --update rabbitmq-c-dev \
+    && apk add --no-cache --update --virtual .phpize-deps $PHPIZE_DEPS \
+    && pecl install -o -f amqp \
+    && docker-php-ext-enable amqp \
+    && apk del .phpize-deps \
+    #
+    && echo "Extensions install - finish"
 
 # install required php extensions
 RUN apk add --no-cache libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql opcache zip bcmath redis \
+    && docker-php-ext-install pdo pdo_mysql opcache zip bcmath redis sockets  \
     && rm -rf /var/cache/apk/* /tmp/* \
     && docker-php-source delete
 
