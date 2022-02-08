@@ -29,6 +29,11 @@ RUN apk add --no-cache libzip-dev \
     && rm -rf /var/cache/apk/* /tmp/* \
     && docker-php-source delete
 
+## Install intl
+RUN apk add --no-cache icu-dev \
+    && docker-php-ext-configure intl  \
+    && docker-php-ext-install intl
+
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
 RUN { \
