@@ -22,3 +22,10 @@ docker build --tag yao3060/yii2-php:7.4-fpm-alpine  -f ./php74/Dockerfile .
 docker push yao3060/yii2-php:7.4-fpm-alpine
 
 ```
+
+## php8.1
+```
+docker build --tag yao3060/yii2-php:8.1-fpm-alpine  -f ./php81/Dockerfile .
+docker push yao3060/yii2-php:8.1-fpm-alpine
+
+```
