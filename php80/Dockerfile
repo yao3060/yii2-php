@@ -1,4 +1,4 @@
-FROM php:8-fpm-alpine
+FROM php:8.0-fpm-alpine
 
 # add phpredis to php-available-exts (install in the next step)
 ENV PHPREDIS_VERSION 5.3.4
@@ -15,13 +15,6 @@ RUN apk add --no-cache libzip-dev \
     && docker-php-ext-install pdo pdo_mysql opcache zip bcmath redis \
     && rm -rf /var/cache/apk/* /tmp/* \
     && docker-php-source delete
-
-# Install mbstring extension
-RUN apk add --no-cache \
-    oniguruma-dev \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-enable mbstring \
-    && rm -rf /tmp/*
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php

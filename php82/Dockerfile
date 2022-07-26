@@ -16,13 +16,6 @@ RUN apk add --no-cache libzip-dev \
     && rm -rf /var/cache/apk/* /tmp/* \
     && docker-php-source delete
 
-# Install mbstring extension
-RUN apk add --no-cache \
-    oniguruma-dev \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-enable mbstring \
-    && rm -rf /tmp/*
-
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
 RUN { \
