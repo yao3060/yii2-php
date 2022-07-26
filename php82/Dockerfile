@@ -1,4 +1,4 @@
-FROM php:8-fpm-alpine
+FROM php:8.2-rc-fpm-alpine3.16
 
 # add phpredis to php-available-exts (install in the next step)
 ENV PHPREDIS_VERSION 5.3.4
@@ -12,7 +12,7 @@ RUN sed -i "/dl-cdn.alpinelinux.org/s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/
 
 # install required php extensions
 RUN apk add --no-cache libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql opcache zip bcmath redis \
+    && docker-php-ext-install pdo pdo_mysql opcache zip bcmath redis  \
     && rm -rf /var/cache/apk/* /tmp/* \
     && docker-php-source delete
 

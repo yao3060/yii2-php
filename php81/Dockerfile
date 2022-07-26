@@ -12,7 +12,7 @@ RUN sed -i "/dl-cdn.alpinelinux.org/s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/
 
 # install required php extensions
 RUN apk add --no-cache libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql opcache zip bcmath redis  mbstring  \
+    && docker-php-ext-install pdo pdo_mysql opcache zip bcmath redis \
     && rm -rf /var/cache/apk/* /tmp/* \
     && docker-php-source delete
 
